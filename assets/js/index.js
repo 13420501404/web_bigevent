@@ -1,24 +1,16 @@
 $(function() {
-    $.ajax({
-        methods: 'get',
-        url: '/my/userinfo',
-        success: function(res) {
-            if (res.status !== 0) return layui.layer.msg(res.message)
-            renderAvatar(res.data)
-
-        },
-
-
-    })
+    getUserInfo()
 
     $("#btnLogout").on('click', function() {
         layui.layer.confirm('确定退出登录?', { icon: 3, title: '提示' }, function(index) {
             //do something
             localStorage.removeItem('token')
-            location.href = 'login.html'
+            location.href = '/login.html'
             layer.close(index);
         });
     })
+
+
 })
 
 function renderAvatar(user) {
@@ -33,4 +25,15 @@ function renderAvatar(user) {
         $('.layui-nav-img').hide()
 
     }
+}
+
+function getUserInfo() {
+    $.ajax({
+        methods: 'get',
+        url: '/my/userinfo',
+        success: function(res) {
+            if (res.status !== 0) return layui.layer.msg(res.message)
+            renderAvatar(res.data)
+        },
+    })
 }
